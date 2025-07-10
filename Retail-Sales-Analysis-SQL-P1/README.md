@@ -30,7 +30,56 @@ This project demonstrates data cleaning and business insights using **SQL querie
 | cogs             | FLOAT       | Cost of goods sold                     |
 | total_sale       | FLOAT       | Total sale amount                      |
 
+
 ---
+
+### 🗂️ **Entity: `retail_sales`**
+
+Since this is a single-table project, we’ll treat each conceptual component (like customer, product category, and transaction) as logical entities that can be split later for normalization. But for this simplified form, here is the **ER diagram structure**:
+
+---
+
+### 🧩 **ER Diagram (Simplified)**
+
+```plaintext
++-------------------+
+|   retail_sales    |
++-------------------+
+| transactions_id PK|
+| sale_date         |
+| sale_time         |
+| customer_id       |
+| gender            |
+| age               |
+| category          |
+| quantity          |
+| price_per_unit    |
+| cogs              |
+| total_sale        |
++-------------------+
+```
+
+#### 🔄 Relationships (in normalized form):
+
+If you wanted to normalize this into separate tables (for scalability or relational analysis), here's how the ERD would look logically:
+
+```plaintext
++-------------------+         +------------------+         +------------------+
+|   Customers       |         |  Categories       |         |  Transactions     |
++-------------------+         +------------------+         +------------------+
+| customer_id   PK  |<------- | category_name PK  |<------- | transactions_id PK|
+| gender            |         +------------------+         | sale_date         |
+| age               |                                         sale_time         |
++-------------------+                                         category_name FK  |
+                                                              customer_id   FK  |
+                                                              quantity           |
+                                                              price_per_unit     |
+                                                              cogs               |
+                                                              total_sale         |
+                                                             +------------------+
+```
+
+
 
 ## 🧹 Data Cleaning
 
