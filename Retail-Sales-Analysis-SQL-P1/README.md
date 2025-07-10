@@ -1,6 +1,3 @@
-Here is a **rewritten and more effective version** of your `README.md` file. It improves clarity, structure, and formatting, while keeping your original content intact:
-
----
 
 ```markdown
 # 🛒 Retail Sales SQL Analysis Project
