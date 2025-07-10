@@ -15,73 +15,53 @@ This project showcases how to use **SQL** for real-world business insights and d
 
 ---
 
-## 📦 Dataset Structure
 
-The dataset records transactions made in a retail store. Here's the schema:
+### 🗂️ **Entity: `retail_sales`**
 
-| Column Name      | Data Type   | Description                            |
-|------------------|-------------|----------------------------------------|
-| `transactions_id`| INT (PK)    | Unique transaction ID                  |
-| `sale_date`      | DATE        | Date of the sale                       |
-| `sale_time`      | TIME        | Time of the sale                       |
-| `customer_id`    | INT         | Unique customer ID                     |
-| `gender`         | VARCHAR(10) | Gender of the customer                 |
-| `age`            | INT         | Age of the customer                    |
-| `category`       | VARCHAR(35) | Product category                       |
-| `quantity`       | INT         | Quantity sold                          |
-| `price_per_unit` | FLOAT       | Price per unit                         |
-| `cogs`           | FLOAT       | Cost of goods sold                     |
-| `total_sale`     | FLOAT       | Total amount of the sale               |
+Since this is a single-table project, we’ll treat each conceptual component (like customer, product category, and transaction) as logical entities that can be split later for normalization. But for this simplified form, here is the **ER diagram structure**:
 
 ---
 
-## 🧩 ER Diagram (Simplified)
+### 🧩 **ER Diagram (Simplified)**
 
-Since this project works with a single flat table, here's a simplified view of the structure:
-
+```plaintext
++-------------------+
+|   retail_sales    |
++-------------------+
+| transactions_id PK|
+| sale_date         |
+| sale_time         |
+| customer_id       |
+| gender            |
+| age               |
+| category          |
+| quantity          |
+| price_per_unit    |
+| cogs              |
+| total_sale        |
++-------------------+
 ```
 
-+-------------------+
-\|   retail\_sales    |
-+-------------------+
-\| transactions\_id PK|
-\| sale\_date         |
-\| sale\_time         |
-\| customer\_id       |
-\| gender            |
-\| age               |
-\| category          |
-\| quantity          |
-\| price\_per\_unit    |
-\| cogs              |
-\| total\_sale        |
-+-------------------+
+#### 🔄 Relationships (in normalized form):
 
-```
+If you wanted to normalize this into separate tables (for scalability or relational analysis), here's how the ERD would look logically:
 
-### 🔄 Normalized View (Logical Design)
-
-To make it scalable, this can be broken down into 3 entities:
-
-```
-
+```plaintext
 +-------------------+         +------------------+         +------------------+
-\|   Customers       |         |  Categories       |         |  Transactions     |
+|   Customers       |         |  Categories       |         |  Transactions     |
 +-------------------+         +------------------+         +------------------+
-\| customer\_id   PK  |         | category\_name PK  |         | transactions\_id PK|
-\| gender            |         +------------------+         | sale\_date         |
-\| age               |                                         sale\_time         |
-+-------------------+                                         customer\_id FK    |
-category\_name FK  |
-quantity           |
-price\_per\_unit     |
-cogs               |
-total\_sale         |
-+------------------+
+| customer_id   PK  |<------- | category_name PK  |<------- | transactions_id PK|
+| gender            |         +------------------+         | sale_date         |
+| age               |                                         sale_time         |
++-------------------+                                         category_name FK  |
+                                                              customer_id   FK  |
+                                                              quantity           |
+                                                              price_per_unit     |
+                                                              cogs               |
+                                                              total_sale         |
+                                                             +------------------+
+```
 
-````
-
----
 
 ## 🧹 Data Cleaning Steps
 
